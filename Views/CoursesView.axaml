@@ -23,6 +23,11 @@
             <TextBlock Text="{Binding CourseTitel}"/>
             <TextBlock Text="{Binding StartDate}"/>
             <TextBlock Text="{Binding EndDate}"/>
+
+            <Button Content="Ta bort"
+                    Classes="danger"
+                    Command="{Binding $parent[ItemsControl].((vm:CourseViewModel)DataContext).RemoveCourseCommand}"
+                    CommandParameter="{Binding}"/>
           </StackPanel>
         </DataTemplate>
       </ItemsControl.ItemTemplate>

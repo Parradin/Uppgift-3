@@ -1,8 +1,60 @@
+
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Client.Views.StudentsView">
-  Welcome to Avalonia!
+             xmlns:vm="using:Client.ViewModels"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="600"
+             x:Class="Client.Views.StudentsView"
+             x:DataType="vm:StudentViewModel">
+
+  <Grid RowDefinitions="Auto,*">
+    <StackPanel Grid.Row="0" Spacing="15">
+      <TextBlock Classes="pageTitle" Text="Studenter"/>
+
+      <Button Classes="form"
+              Content="Lägg till student"
+              Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).GoToAddStudentCommand}"
+              HorizontalAlignment="Left"
+              MinWidth="150"
+              Padding="10,5"/>
+    </StackPanel>
+
+    <ScrollViewer Grid.Row="1"
+                  VerticalScrollBarVisibility="Auto"
+                  Margin="0,15,0,0">
+
+      <ItemsControl ItemsSource="{Binding Students}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <Border Padding="10"
+                    Margin="0,0,0,10"
+                    BorderBrush="Gray"
+                    BorderThickness="1"
+                    CornerRadius="5">
+
+              <StackPanel Spacing="5">
+                <TextBlock Text="{Binding PersonalId}"/>
+                <TextBlock Text="{Binding FirstName}"/>
+                <TextBlock Text="{Binding LastName}"/>
+                <TextBlock Text="{Binding Email}"/>
+                <TextBlock Text="{Binding PhoneNr}"/>
+                <TextBlock Text="{Binding Address.StreetAdress}"/>
+                <TextBlock Text="{Binding Address.City}"/>
+                <TextBlock Text="{Binding Address.PostalCode}"/>
+
+                <Button Content="Ta bort student"
+                        Classes="danger"
+                        HorizontalAlignment="Left"
+                        Command="{Binding $parent[ItemsControl].((vm:StudentViewModel)DataContext).RemoveStudentCommand}"
+                        CommandParameter="{Binding}"/>
+              </StackPanel>
+            </Border>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
+  </Grid>
 </UserControl>

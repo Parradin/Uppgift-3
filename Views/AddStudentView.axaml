@@ -1,8 +1,74 @@
+
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Client.Views.AddStudentView">
-  Welcome to Avalonia!
+             xmlns:vm="using:Client.ViewModels"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="600"
+             x:Class="Client.Views.AddStudentView"
+             x:DataType="vm:AddStudentViewModel">
+
+  <Grid RowDefinitions="Auto,*">
+    <TextBlock Grid.Row="0"
+               Classes="pageTitle"
+               Text="Lägg till student"
+               Margin="0,0,0,15"/>
+
+    <ScrollViewer Grid.Row="1"
+                  VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+
+      <StackPanel Spacing="15">
+
+        <StackPanel Spacing="5">
+          <Label Classes="form" Content="Personnummer"/>
+          <TextBox Classes="form" Text="{Binding PersonalId}"/>
+        </StackPanel>
+
+        <StackPanel Spacing="5">
+          <Label Classes="form" Content="Förnamn"/>
+          <TextBox Classes="form" Text="{Binding FirstName}"/>
+        </StackPanel>
+
+        <StackPanel Spacing="5">
+          <Label Classes="form" Content="Efternamn"/>
+          <TextBox Classes="form" Text="{Binding LastName}"/>
+        </StackPanel>
+
+        <StackPanel Spacing="5">
+          <Label Classes="form" Content="E-post"/>
+          <TextBox Classes="form" Text="{Binding Email}"/>
+        </StackPanel>
+
+        <StackPanel Spacing="5">
+          <Label Classes="form" Content="Telefonnummer"/>
+          <TextBox Classes="form" Text="{Binding PhoneNr}"/>
+        </StackPanel>
+
+        <StackPanel Spacing="5">
+          <Label Classes="form" Content="Gatuadress"/>
+          <TextBox Classes="form" Text="{Binding StreetAdress}"/>
+        </StackPanel>
+
+        <StackPanel Spacing="5">
+          <Label Classes="form" Content="Stad"/>
+          <TextBox Classes="form" Text="{Binding City}"/>
+        </StackPanel>
+
+        <StackPanel Spacing="5">
+          <Label Classes="form" Content="Postnummer"/>
+          <TextBox Classes="form" Text="{Binding PostalCode}"/>
+        </StackPanel>
+
+        <Button Classes="form"
+                Content="Spara student"
+                Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SaveStudentAndGoToStudentsCommand}"
+                HorizontalAlignment="Left"
+                Margin="0,5,0,20"/>
+
+      </StackPanel>
+    </ScrollViewer>
+  </Grid>
 </UserControl>

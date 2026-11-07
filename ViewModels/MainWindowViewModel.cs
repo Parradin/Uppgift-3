@@ -11,12 +11,6 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty]
     public partial ViewModelBase CurrentView { get; set; } = new();
 
-    public MainWindowViewModel()
-    {
-        _pageViewFactory = new PageViewFactory();
-        GoToHome();
-    }
-
     public MainWindowViewModel(PageViewFactory pageViewFactory)
     {
         _pageViewFactory = pageViewFactory;
@@ -37,5 +31,36 @@ public partial class MainWindowViewModel : ViewModelBase
     private void GoToTeachers() => CurrentView = _pageViewFactory.LoadPageViewModel(Enums.PageViewsEnum.Teachers);
     [RelayCommand]
     private void GoToAddTeacher() => CurrentView = _pageViewFactory.LoadPageViewModel(Enums.PageViewsEnum.AddTeacher);
+
+    [RelayCommand]
+    private void SaveCourseAndGoToCourses()
+    {
+        if (CurrentView is AddCourseViewModel addCourseViewModel)
+        {
+            if (addCourseViewModel.SaveCourse())
+            {
+                GoToCourses();
+            }
+        }
+    }
+    [RelayCommand]
+    private void SaveStudentAndGoToStudents()
+    {
+        if (CurrentView is AddStudentViewModel addStudentViewModel)
+        {
+            addStudentViewModel.SaveStudent();
+
+            GoToStudents();
+        }
+    }
+    [RelayCommand]
+    private void SaveTeacherAndGoToTeachers()
+    {
+        if (CurrentView is AddTeacherViewModel addTeacherViewModel)
+        {
+            if (addTeacherViewModel.SaveTeacher())
+                GoToTeachers();
+        }
+    }
 
 }

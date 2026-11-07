@@ -1,19 +1,24 @@
-using System;
 using System.Collections.ObjectModel;
 using Client.Models;
+using Client.Services;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+
 namespace Client.ViewModels;
 
 public partial class CourseViewModel : ViewModelBase
 {
-    public ObservableCollection<Course> Courses { get; set; } = new()
-{
-    new Course
+    private readonly CourseStore _courseStore;
+
+    public ObservableCollection<Course> Courses => _courseStore.Courses;
+
+    public CourseViewModel(CourseStore courseStore)
     {
-        CourseNr = "C001",
-        CourseTitel = "Programmering 1",
-        StartDate = new DateTime(2026, 11, 1),
-        EndDate = new DateTime(2027, 1, 30),
-        IsDistance = false
+        _courseStore = courseStore;
     }
-};
+    [RelayCommand]
+    private void RemoveCourse(Course course)
+    {
+        _courseStore.Courses.Remove(course);
+    }
 }
