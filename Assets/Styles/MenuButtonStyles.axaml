@@ -17,7 +17,7 @@
           </StackPanel>
         </Button>
 
-        <Button Classes="marko">
+        <Button Classes="warning">
           <StackPanel Orientation="Horizontal">
             <Label Padding="0 5" FontFamily="{DynamicResource IconFont}" Content="&#xe2c2;" />
             <Label FontSize="20" Content="Knapp"/>
@@ -41,29 +41,32 @@
     <Setter Property="FontSize" Value="20"/>
     <Setter Property="Padding" Value="15 10"/>
     <Setter Property="HorizontalAlignment" Value="Stretch"/>
+    <Setter Property="MinWidth" Value="200" />
   </Style>
 
-  <Style Selector="Button.marko">
-    <Setter Property="Foreground" Value="{DynamicResource ForegroundColor}" />
+  <Style Selector="Button.warning">
+    <Setter Property="Foreground" Value="{DynamicResource WarningColor}" />
     <Setter Property="Background" Value="{DynamicResource BackgroundColor}" />
-    <Setter Property="FontSize" Value="40"/>
+    <Setter Property="FontSize" Value="20"/>
     <Setter Property="Padding" Value="15 10"/>
     <Setter Property="HorizontalAlignment" Value="Stretch"/>
-    <Setter Property="BorderBrush" Value="{DynamicResource ForegroundColor}"/>
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="BorderBrush" Value="{DynamicResource WarningColor}"/>
     <Setter Property="BorderThickness" Value="3"/>
     <Setter Property="CornerRadius" Value="50"/>
+
   </Style>
 
   <Style Selector="Button.form">
     <Setter Property="Foreground" Value="{DynamicResource ForegroundColor}" />
     <Setter Property="Background" Value="{DynamicResource BackgroundColor}" />
-    <Setter Property="FontSize" Value="10"/>
+    <Setter Property="FontSize" Value="20"/>
     <Setter Property="Padding" Value="30 7"/>
     <Setter Property="HorizontalAlignment" Value="Stretch"/>
     <Setter Property="HorizontalContentAlignment" Value="Center" />
     <Setter Property="MinWidth" Value="250" />
-    <Setter Property="BorderBrush" Value="Blue" />
-    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="BorderBrush" Value="White" />
+    <Setter Property="BorderThickness" Value="2" />
     <Setter Property="CornerRadius" Value="50" />
   </Style>
 

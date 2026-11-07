@@ -2,7 +2,38 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Client.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Client.Views.AddCourseView">
-  Welcome to Avalonia!
+             x:Class="Client.Views.AddCourseView"
+             x:DataType="vm:AddCourseViewModel">
+  <StackPanel Spacing="20">
+
+    <TextBlock Classes="pageTitle" Text="Lägg till kurs"/>
+
+    <StackPanel Spacing="5">
+      <Label Classes="form" Content="Kursnummer"/>
+      <TextBox Classes="form"
+               Text="{Binding CourseNr}"/>
+    </StackPanel>
+
+    <StackPanel Spacing="5">
+      <Label Classes="form" Content="Kursnamn"/>
+      <TextBox Classes="form"
+               Text="{Binding CourseTitel}"/>
+    </StackPanel>
+
+    <StackPanel Spacing="5">
+      <Label Classes="form" Content="Startdatum"/>
+      <DatePicker SelectedDate="{Binding StartDate}"/>
+    </StackPanel>
+
+    <StackPanel Spacing="5">
+      <Label Classes="form" Content="Slutdatum"/>
+      <DatePicker SelectedDate="{Binding EndDate}"/>
+    </StackPanel>
+
+    <Button Classes="form"
+            Content="Spara kurs"
+            HorizontalAlignment="Left"/>
+  </StackPanel>
 </UserControl>

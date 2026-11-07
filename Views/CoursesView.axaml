@@ -2,7 +2,30 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Client.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Client.Views.CoursesView">
-  Welcome to Avalonia!
+             x:Class="Client.Views.CoursesView"
+             x:DataType="vm:CourseViewModel">
+  <StackPanel Spacing="20">
+
+    <TextBlock Classes="pageTitle" Text="Kurser"/>
+    <Button Classes="form"
+            Content="Lägg till kurs"
+            Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).GoToAddCourseCommand}"
+            HorizontalAlignment="Left"
+            MinWidth="150"
+            Padding="10 5"/>
+    <ItemsControl ItemsSource="{Binding Courses}">
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+          <StackPanel Spacing="5">
+            <TextBlock Text="{Binding CourseNr}"/>
+            <TextBlock Text="{Binding CourseTitel}"/>
+            <TextBlock Text="{Binding StartDate}"/>
+            <TextBlock Text="{Binding EndDate}"/>
+          </StackPanel>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+  </StackPanel>
 </UserControl>
