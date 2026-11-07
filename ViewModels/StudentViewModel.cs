@@ -2,7 +2,7 @@ using System;
 
 namespace Client.ViewModels;
 
-public class StudentViewModel
+public class StudentViewModel : ViewModelBase
 {
 
 }
