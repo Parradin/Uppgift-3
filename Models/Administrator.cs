@@ -2,7 +2,7 @@ using System;
 
 namespace Client.Models;
 
-public class Administrator
+public class Administrator : EducationLeader
 {
 
 }
