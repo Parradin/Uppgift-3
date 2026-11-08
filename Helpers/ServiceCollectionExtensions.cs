@@ -24,5 +24,6 @@ public static class ServiceCollectionExtensions
         collection.AddTransient<AddStudentViewModel>();
         collection.AddTransient<TeacherViewModel>();
         collection.AddTransient<AddTeacherViewModel>();
+        collection.AddSingleton<RestDbService>();
     }
 }

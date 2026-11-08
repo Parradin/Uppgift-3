@@ -1,0 +1,16 @@
+[
+    {
+        "personalId": "198501011234",
+        "firstName": "Erik",
+        "lastName": "Eriksson",
+        "email": "erik@test.se",
+        "phoneNr": "0709876543",
+        "streetAdress": "Lillgatan 2",
+        "city": "Halmstad",
+        "postalCode": "30241",
+        "knowledgeArea": "C# och .NET",
+        "courses": [
+            "NET25"
+        ]
+    }
+]

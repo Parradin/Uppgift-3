@@ -1,0 +1,12 @@
+[
+    {
+        "personalId": "199901011234",
+        "firstName": "Anna",
+        "lastName": "Andersson",
+        "email": "anna@test.se",
+        "phoneNr": "0701234567",
+        "streetAdress": "Storgatan 1",
+        "city": "Halmstad",
+        "postalCode": "30240"
+    }
+]
