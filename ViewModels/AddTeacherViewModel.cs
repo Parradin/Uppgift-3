@@ -1,6 +1,7 @@
 
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Client.Models;
 using Client.Services;
@@ -10,6 +11,8 @@ namespace Client.ViewModels;
 public partial class AddTeacherViewModel : ViewModelBase
 {
     private readonly TeacherStore _teacherStore;
+    private readonly CourseStore _courseStore;
+    private readonly RestDbService _restDbService;
 
     public ObservableCollection<CourseSelectionViewModel> CourseOptions { get; } = new();
 
@@ -23,17 +26,22 @@ public partial class AddTeacherViewModel : ViewModelBase
     [ObservableProperty] private string postalCode = string.Empty;
     [ObservableProperty] private string knowledgeArea = string.Empty;
 
-    public AddTeacherViewModel(TeacherStore teacherStore, CourseStore courseStore)
+    public AddTeacherViewModel(
+        TeacherStore teacherStore,
+        CourseStore courseStore,
+        RestDbService restDbService)
     {
         _teacherStore = teacherStore;
+        _courseStore = courseStore;
+        _restDbService = restDbService;
 
-        foreach (var course in courseStore.Courses)
+        foreach (var course in _courseStore.Courses)
         {
             CourseOptions.Add(new CourseSelectionViewModel(course));
         }
     }
 
-    public bool SaveTeacher()
+    public async Task<bool> SaveTeacherAsync()
     {
         if (string.IsNullOrWhiteSpace(PersonalId) ||
             string.IsNullOrWhiteSpace(FirstName) ||
@@ -62,15 +70,18 @@ public partial class AddTeacherViewModel : ViewModelBase
                 PostalCode = PostalCode
             },
             KnowledgeArea = KnowledgeArea,
-
             Courses = CourseOptions
                 .Where(c => c.IsSelected)
                 .Select(c => c.Course)
                 .ToList()
         };
 
-        _teacherStore.Teachers.Add(teacher);
+        var saved = await _restDbService.AddTeacherAsync(teacher);
 
+        if (!saved)
+            return false;
+
+        _teacherStore.Teachers.Add(teacher);
         return true;
     }
 }

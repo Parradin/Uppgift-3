@@ -1,13 +1,16 @@
+
 using System;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Client.Services;
-using CommunityToolkit.Mvvm.Input;
 using Client.Models;
+
 namespace Client.ViewModels;
 
 public partial class AddCourseViewModel : ViewModelBase
 {
     private readonly CourseStore _courseStore;
+    private readonly RestDbService _restDbService;
 
     [ObservableProperty]
     private string courseNr = string.Empty;
@@ -21,11 +24,15 @@ public partial class AddCourseViewModel : ViewModelBase
     [ObservableProperty]
     private DateTimeOffset? endDate;
 
-    public AddCourseViewModel(CourseStore courseStore)
+    public AddCourseViewModel(
+        CourseStore courseStore,
+        RestDbService restDbService)
     {
         _courseStore = courseStore;
+        _restDbService = restDbService;
     }
-    public bool SaveCourse()
+
+    public async Task<bool> SaveCourseAsync()
     {
         if (string.IsNullOrWhiteSpace(CourseNr) ||
             string.IsNullOrWhiteSpace(CourseTitel) ||
@@ -47,9 +54,13 @@ public partial class AddCourseViewModel : ViewModelBase
         if (!course.IsCourseDateValid())
             return false;
 
-        _courseStore.Courses.Add(course);
+        var saved = await _restDbService.AddCourseAsync(course);
 
+        if (!saved)
+            return false;
+
+        _courseStore.Courses.Add(course);
         return true;
     }
-
 }
+

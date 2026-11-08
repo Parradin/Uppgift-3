@@ -31,11 +31,11 @@ public class PageViewFactory : IPageViewFactory
         {
             PageViewsEnum.Home => new HomeViewModel(),
             PageViewsEnum.Courses => new CourseViewModel(_courseStore, _restDbService),
-            PageViewsEnum.AddCourse => new AddCourseViewModel(_courseStore),
-            PageViewsEnum.Students => new StudentViewModel(_studentStore),
-            PageViewsEnum.AddStudent => new AddStudentViewModel(_studentStore),
-            PageViewsEnum.Teachers => new TeacherViewModel(_teacherStore),
-            PageViewsEnum.AddTeacher => new AddTeacherViewModel(_teacherStore, _courseStore),
+            PageViewsEnum.AddCourse => new AddCourseViewModel(_courseStore, _restDbService),
+            PageViewsEnum.Students => new StudentViewModel(_studentStore, _restDbService),
+            PageViewsEnum.AddStudent => new AddStudentViewModel(_studentStore, _restDbService),
+            PageViewsEnum.Teachers => new TeacherViewModel(_teacherStore, _restDbService),
+            PageViewsEnum.AddTeacher => new AddTeacherViewModel(_teacherStore, _courseStore, _restDbService),
             _ => throw new InvalidOperationException("Det finns inte det du ville ha"),
         };
     }

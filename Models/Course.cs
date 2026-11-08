@@ -1,9 +1,11 @@
 using System;
-
+using System.Text.Json.Serialization;
 namespace Client.Models;
 
 public class Course
 {
+    [JsonPropertyName("_id")]
+    public string? Id { get; set; }
     public required string CourseNr { get; set; }
     public required string CourseTitel { get; set; }
     public required DateTime StartDate { get; set; }

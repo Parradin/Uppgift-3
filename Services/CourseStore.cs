@@ -10,11 +10,11 @@ public class CourseStore
 
     public void LoadCourses(List<Course> courses)
     {
-        courses.Clear();
+        Courses.Clear();
 
-        foreach (var Course in courses)
+        foreach (var course in courses)
         {
-            Courses.Add(Course);
+            Courses.Add(course);
         }
     }
 }

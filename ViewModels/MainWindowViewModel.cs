@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Client.Factories;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -33,33 +34,36 @@ public partial class MainWindowViewModel : ViewModelBase
     private void GoToAddTeacher() => CurrentView = _pageViewFactory.LoadPageViewModel(Enums.PageViewsEnum.AddTeacher);
 
     [RelayCommand]
-    private void SaveCourseAndGoToCourses()
+    private async Task SaveCourseAndGoToCoursesAsync()
     {
         if (CurrentView is AddCourseViewModel addCourseViewModel)
         {
-            if (addCourseViewModel.SaveCourse())
+            if (await addCourseViewModel.SaveCourseAsync())
             {
                 GoToCourses();
             }
         }
     }
     [RelayCommand]
-    private void SaveStudentAndGoToStudents()
+    private async Task SaveStudentAndGoToStudentsAsync()
     {
         if (CurrentView is AddStudentViewModel addStudentViewModel)
         {
-            addStudentViewModel.SaveStudent();
-
-            GoToStudents();
+            if (await addStudentViewModel.SaveStudentAsync())
+            {
+                GoToStudents();
+            }
         }
     }
     [RelayCommand]
-    private void SaveTeacherAndGoToTeachers()
+    private async Task SaveTeacherAndGoToTeachersAsync()
     {
         if (CurrentView is AddTeacherViewModel addTeacherViewModel)
         {
-            if (addTeacherViewModel.SaveTeacher())
+            if (await addTeacherViewModel.SaveTeacherAsync())
+            {
                 GoToTeachers();
+            }
         }
     }
 

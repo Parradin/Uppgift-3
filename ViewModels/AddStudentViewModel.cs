@@ -2,12 +2,14 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Client.Models;
 using Client.Services;
+using System.Threading.Tasks;
 
 namespace Client.ViewModels;
 
 public partial class AddStudentViewModel : ViewModelBase
 {
     private readonly StudentStore _studentStore;
+    private readonly RestDbService _restDbService;
 
     [ObservableProperty]
     private string personalId = string.Empty;
@@ -33,13 +35,15 @@ public partial class AddStudentViewModel : ViewModelBase
     [ObservableProperty]
     private string postalCode = string.Empty;
 
-    public AddStudentViewModel(StudentStore studentStore)
+    public AddStudentViewModel(
+        StudentStore studentStore,
+        RestDbService restDbService)
     {
         _studentStore = studentStore;
+        _restDbService = restDbService;
     }
 
-    [RelayCommand]
-    public void SaveStudent()
+    public async Task<bool> SaveStudentAsync()
     {
         if (string.IsNullOrWhiteSpace(PersonalId) ||
             string.IsNullOrWhiteSpace(FirstName) ||
@@ -50,7 +54,7 @@ public partial class AddStudentViewModel : ViewModelBase
             string.IsNullOrWhiteSpace(City) ||
             string.IsNullOrWhiteSpace(PostalCode))
         {
-            return;
+            return false;
         }
 
         var student = new Student
@@ -68,6 +72,13 @@ public partial class AddStudentViewModel : ViewModelBase
             }
         };
 
+        var saved = await _restDbService.AddStudentAsync(student);
+
+        if (!saved)
+            return false;
+
         _studentStore.Students.Add(student);
+
+        return true;
     }
 }

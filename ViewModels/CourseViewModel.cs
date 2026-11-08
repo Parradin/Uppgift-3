@@ -1,5 +1,7 @@
+
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Client.Models;
 using Client.Services;
 using CommunityToolkit.Mvvm.Input;
@@ -20,25 +22,31 @@ public partial class CourseViewModel : ViewModelBase
         _courseStore = courseStore;
         _restDbService = restDbService;
 
-        LoadCoursesAsync();
+        _ = LoadCoursesAsync();
     }
 
-    private async void LoadCoursesAsync()
+    private async Task LoadCoursesAsync()
     {
-        try
-        {
-            var courses = await _restDbService.GetCoursesAsync();
-            _courseStore.LoadCourses(courses);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Kunde inte hämta kurser: {ex.Message}");
-        }
+        var courses = await _restDbService.GetCoursesAsync();
+
+        Console.WriteLine($"Kurser hämtade: {courses.Count}");
+
+        _courseStore.LoadCourses(courses);
+
+        Console.WriteLine($"Kurser i Store: {_courseStore.Courses.Count}");
     }
 
     [RelayCommand]
-    private void RemoveCourse(Course course)
+    private async Task RemoveCourseAsync(Course course)
     {
-        _courseStore.Courses.Remove(course);
+        if (course == null)
+            return;
+
+        var deleted = await _restDbService.DeleteCourseAsync(course);
+
+        if (deleted)
+        {
+            _courseStore.Courses.Remove(course);
+        }
     }
 }

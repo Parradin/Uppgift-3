@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Client.Models;
 
 public class Teacher : Person
 {
+    [JsonPropertyName("_id")]
+    public string? Id { get; set; }
 
     public required string KnowledgeArea { get; set; }
 
